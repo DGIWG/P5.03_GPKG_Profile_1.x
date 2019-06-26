@@ -1,2 +1,2 @@
-# P5.03_GPKG_Profile_1.x
-DGWIG Profile of OGC Geogpackage 1.2
+# P5.03_GPKG_Profile_1.x _ Draft
+DGWIG Profile of OGC Geogpackage 2.1
