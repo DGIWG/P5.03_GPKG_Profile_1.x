@@ -1,0 +1,30 @@
+== File Names
+
+GeoPackage file names SHOULD include the following elements:
+
+* GeoPackage Producer
+* Data Product
+* Geographic Coverage Area
+* Zoom Levels
+* Version
+* GeoPackage Creation Date
+
+Additional elements MAY be added to the file names for mission or agency specific use. Elements should be ordered from general to specific, with “_” used to delimit elements and “-“ used to delimit words within an element. The following general pattern SHOULD be used:
+
+\{Producer}_\{Data Product}_\{Geo Coverage Area}_\{Zoom Levels}_\{Version}_\{Date}
+
+The example below provides further guidance on file names for NSG GeoPackages:
+
+* GeoPackage Producer: _Army Geospatial Center (AGC)_
+* Data Product(s): _Buckeye_
+* Geographic Coverage Area: _Fort Bliss, Texas, USA_
+* Zoom Levels: _14-20_
+* Version: _1.0_
+* GeoPackage Creation Date: _29 August 2016_
+
+“AGC_BUCK_Ft-Bliss_14-20_v1-0_29AUG2016.gpkg”
+
+GeoPackage versions SHOULD be updated in a consistent manner. Minor version updates (“v1-1”) SHOULD be used to indicate that new features and/or tiles have been added to the existing raster tile pyramid or feature data set. Major version updates (“v2-0”) SHOULD be used to indicate that the tiles and/or features are substantially different than in the previous version.
+
+::
+*_NSG Req 1: GeoPackages that contains NSG data SHALL use the “gpkg” file extension. They SHALL NOT use the “gpkx” file extension to indicate that they are Extended GeoPackages._*
