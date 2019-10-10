@@ -1,0 +1,66 @@
+== 7.4 Data Validity Constraints
+
+This clause specifies constraints on allowable data values in GeoPackage SQL tables to enable assessment and enforcement of data validity. Its individual requirements are conditional based on whether a GeoPackage contains features or tiles. It applies to tables specified in the table name column of Table 26 below.
+
+GeoPackage Infrastructure and Applications MAY
+
+* Maintain data validity after every SQL command that changes GeoPackage data when this is a critical requirement (e.g for data extent or metadata). Doing so (e.g. with SQL triggers) can cause significant performance degradation.
+* Maintain data validity after a sequence of SQL commands, or after some application-specific unit of work, or upon application startup and/or termination, when this is not a critical requirement. Doing so (e.g. with a background process or a “batch” job upon application termination) can provide significant performance enhancement.
+
+::
+*_NSG Req 19: Data validity SHALL be assessed against data value constraints specified in Table 26 below using a test suite. Data validity MAY be enforced by SQL triggers._*
+
+Table 26: Data Validity Constraints
+
+[cols=",,,",options="header",]
+|=========================================================================================================================================================================================================================================================================================================================
+|*ID#* |*Table Name* |*Column Name* |*Value Constraints*
+|1 |“gpkg_spatial_ref_sys” |“organization” |“EPSG” or “NGA”
+|2 |“gpkg_spatial_ref_sys” |“description” a|
+NOT NULL, not an empty string, not all whitespace, not “unknown” (any case), not “tbd” (any case).  +
+For CRS specified in Clause 7.1 above, “description” column value from Table 7 through Table 19  +
+|3 |“gpkg_contents” |“data_type” a|
+“features” or “tiles” or an implementer-defined value  +
+for other data tables in an Extended GeoPackage  +
+|4 |“gpkg_contents” |“min_x” a|
+NULL if no information available, Otherwise:  +
+If gpkg_contents.data_type = “features”, value SHALL be >= the minimum ST_MinX(\{geom_col}) value from gpkg_contents.table_name.  +
+If gpkg_contents data_type = “tiles”, value SHALL be >= gpkg_tile_matrix_set.min_x column value for gpkg_contents.table_name.  +
+|5 |“gpkg_contents” |“min_y” a|
+NULL if no information available. Otherwise:  +
+If gpkg_contents.data_type = “features”, value SHALL be >= the minimum ST_MinY(\{geom_col}) value from gpkg_contents.table_name.  +
+If gpkg_contents data_type = “tiles”, value SHALL be >= gpkg_tile_matrix_set.min_y column value for gpkg_contents.table_name.  +
+|6 |“gpkg_contents” |“max_x” a|
+NULL if no information available. Otherwise:  +
+If gpkg_contents.data_type = “features”, value SHALL be <= the maximum ST_MaxX(\{geom_col}) value from gpkg_contents.table_name.  +
+If gpkg_contents data_type = “tiles”, value SHALL be <= gpkg_tile_matrix_set.max_x column value for gpkg_contents.table_name.  +
+|7 |“gpkg_contents” |“max_y” a|
+NULL if no information available. Otherwise:  +
+If gpkg_contents.data_type = “features”, value SHALL be <= the maximum ST_MaxY(\{geom_col}) value from gpkg_contents.table_name.  +
+If gpkg_contents data_type = “tiles”, value SHALL be <= gpkg_tile_matrix_set.max_y column value for gpkg_contents.table_name.   
+|8 |“gpkg_geometry_columns” |“z” |2: z values optional is prohibited
+|9 |“gpkg_geometry_columns” |“z” |0: z values prohibited is required for all 2-D CRS, i.e. where definition column of gpkg_spatial_ref_sys with same srs_id value contains WKT definition starting with “GEODCRS” or “PROJCRS” per OGC 12-063/ISO 19162
+|10 |“gpkg_geometry_columns” |“z” |1: z values mandatory is required for all 3-D CRS, i.e. where definition column of gpkg_spatial_ref_sys with same srs_id value contains WKT definition starting with “GEODCRS” or “COMPOUNDCRS” with either “GEODCRS” or “PROJCRS” and “VERTCRS” definitions per OGC 12-063 / ISO 19162
+|11 |Every gpkg_geomtry_columns table_name column value vector feature user data table name feat_table |Corresponding gpkg_geometry_columns column_name column value geom_col name a|
+If corresponding gpkg_geometry_columns.z = 0,  +
+*SELECT* COUNT (*) *FROM* feat_table *WHERE* ST_Is3D(geom_col) SHALL return 0.  +
+If z = 1, *SELECT* COUNT (*) *FROM* feat_table *WHERE* *NOT* ST_Is3D(geom_col) SHALL return 0.  +
+|12 |“gpkg_tile_matrix” |“zoom_level” |0 <= zoom_level <= max_level
+|13 |“gpkg_tile_matrix” |“tile_width” |256
+|14 |“gpkg_tile_matrix” |“tile_height” |256
+|15 |“gpkg_tile_matrix” |“pixel_x_size” |SHALL vary by a factor of 2 between all adjacent zoom levels for the same table_name
+|16 |“gpkg_tile_matrix” |“pixel_y”size” |SHALL vary by a factor of 2 between all adjacent zoom levels for the same table_name
+|17 |Every gpkg_contents table_name column value where data_type = “tiles” |“zoom_level” |0 < = zoom_level <= max_level
+|18 |“gpkg_metadata” |“id” |1 SHALL be used only for NSG NMIS v2.2 Metadata for entire GeoPackage
+|19 |“gpkg_metadata” |“md_scope” |“series” or “dataset” for id = 1
+|20 |“gpkg_metadata” |“md_standard_uri” |http://metadata.ces.mil/dse/ns/GSIP/nmis/2.2.0/doc for id = 1
+|21 |“gpkg_metadata” |“mime_type” |“text/xml” for id = 1
+|22 |“gpkg_metadata” |“metadata” |NMIS v2.2 metadata instance document for id = 1
+|23 |“gpkg_metadata_reference” |“reference_scope” |“geopackage” for md_file_id = 1
+|24 |“gpkg_metadata_reference” |“table_name” |NULL for md_file_id = 1
+|25 |“gpkg_metadata_reference” |“column_name” |NULL for md_file_id = 1
+|26 |“gpkg_metadata_reference” |“row_id_value” |NULL for md_file_id = 1
+|27 |“gpkg_metadata_reference” |“timestamp” |timestamp value in ISO 8601format
+|28 |“gpkg_metadata_reference” |“md_file_id” |1 required for NMIS metadata
+|29 |“gpkg_metadata_reference” |“md_parent_id” |NULL for md_file_id = 1
+|=========================================================================================================================================================================================================================================================================================================================
