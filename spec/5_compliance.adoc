@@ -1,0 +1,7 @@
+= 5. Compliance
+
+OGC develops test suites for vendors to use as a part of the OGC’s Compliance Interoperability Test and Evaluation (CITE) certification program. The NSG compliance test for GeoPackage 1.0 will be based on the same software used for OGC’s CITE test engines. The NSG compliance test suite for GeoPackage 1.0 is currently under development.
+
+In addition to the NSG compliance test, this NSG profile is intended to be used during interoperability events to assess the compliance of vendors’ implementations to the NSG interoperability standard. This interoperability standard will be used as a part of a planned Conformance Assessment and Interoperability Testing Program to certify that vendors’ products are compliant with the NSG interoperability standard.
+
+The Open Geospatial Consortium (OGC) provides certification for its members against OGC specifications. OGC normally does not perform the testing, relying instead on results provided by vendors. In a similar fashion, a vendor will run the NSG compliance test against their application and provide test results to the Conformance Assessment and Interoperability Testing Program. Those results will in turn, generally be accepted by the Conformance Assessment and Interoperability Testing Program; the compliance test results for NSG GeoPackage 1.0 serve as objective proof of NSG interoperability standard compliance.
