@@ -1,0 +1,89 @@
+= Annex A GeoPackage to DoD DSE MDR CRS Dictionary Crosswalk
+
+
+
+This Annex provides a crosswalk between the Coordinate Reference Systems (CRS) defined in Clause 7.1 Spatial Reference Systems and the corresponding identifiers in the DoD/IC Coordinate Reference Systems Dictionary in the DoD Data Services Environment (DSE) Metadata Registry (MDR), where such exist. Identifiers are proposed for the CRSs that are not registered in the DSE MDR. In both cases, the DSE MDR CRS IDs do not contain the *http://metadata.ces.mil/mdr/ns/GSIP/crs/* URI prefix text or hyperlink, which is implied.
+
+
+
+Table 27: GeoPackage to DoD DSE MDR CRS Crosswalk
+
+
+
+[cols=",,,",options="header",]
+
+|============================================================================================================================
+
+|*CRS Name* a|
+
+*CRS*
+
+
+
+*AUTH*
+
+
+
+*ID*
+
+
+
+ a|
+
+*DSE MDR *
+
+
+
+*CRS ID*
+
+
+
+ a|
+
+*DSE*
+
+
+
+*MDR*
+
+
+
+*Type*
+
+
+
+|WGS 84 Geographic 3D lat/lon/hae |EPSG 4979 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_3D[WGS84E_3D] |Exists
+
+|WGS 84 Geographic 2D lat/lon |EPSG 4326 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_2D[WGS84E_2D] |Exists
+
+|WGS 84 / World Mercator |EPSG 3395 |WGS84E_WorldMercator |New
+
+|WGS 84 / UPS North (E,N) |EPSG 5041 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_UPSN[WGS84E_UPSN] |Exists
+
+|WGS 84 / UPS South (E,N) |EPSG 5042 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_UPSS[WGS84E_UPSS] |Exists
+
+|EGM2008 geoid height |EPSG 3855 |http://metadata.ces.mil/mdr/ns/GSIP/crs/EGM08_H[EGM08_H] |Exists
+
+|EGM2008 geoid depth |NGA 3856 |http://metadata.ces.mil/mdr/ns/GSIP/crs/EGM08_D[EGM08_D] |Exists
+
+|EGM96 geoid height |EPSG 5773 |http://metadata.ces.mil/mdr/ns/GSIP/crs/EGM96_H[EGM96_H] |Exists
+
+|EGM96 geoid depth |NGA 5774 |http://metadata.ces.mil/mdr/ns/GSIP/crs/EGM96_D[EGM96_D] |Exists
+
+|MSL height |EPSG 5714 |http://metadata.ces.mil/mdr/ns/GSIP/crs/MSL_H[MSL_H] |Exists
+
+|MSL depth |EPSG 5715 |http://metadata.ces.mil/mdr/ns/GSIP/crs/MSL_D[MSL_D] |Exists
+
+|WGS84 Geographic 2D Height (EGM08) |NGA 8181 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_EGM08_H[WGS84E_EGM08_H] |Exists
+
+|WGS84 Geographic 2D Depth (EGM08) |NGA 8182 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_EGM08_D[WGS84E_EGM08_D] |Exists
+
+|WGS84 Geographic 2D Height (EGM96) |NGA 9099 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_EGM96_H[WGS84E_EGM96_H] |Exists
+
+|WGS84 Geographic 2D Depth (EGM96) |NGA 9100 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_EGM96_D[WGS84E_EGM96_D] |Exists
+
+|WGS84 Geographic 2D Height (MSL) |NGA 9040 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_MSL_H[WGS84E_MSL_H] |Exists
+
+|WGS84 Geographic 2D Depth (MSL) |NGA 9041 |http://metadata.ces.mil/mdr/ns/GSIP/crs/WGS84E_MSL_D[WGS84E_MSL_D] |Exists
+
+|============================================================================================================================
