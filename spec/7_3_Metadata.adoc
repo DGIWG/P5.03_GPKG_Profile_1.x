@@ -1,0 +1,484 @@
+== 7.3 Metadata
+
+This clause requires storage of NMIS v2.2 metadata as XML in GeoPackages that contain NSG data, and specifies use of particular metadata values in certain conditions per the “National System for Geospatial Intelligence Metadata Foundation (NMF) – Part 1: Conceptual Schema Profile, Version 2.2, 23 September 2014”.
+
+The structure and allowed content values of NSG metadata for a GeoPackage are specified by the “National System for Geospatial Intelligence Metadata Implementation Specification (NMIS) - Part 2: XML Exchange Schema, Version 2.2.0, 29 January 2015”.
+
+::
+*_NSG Req 12: A GeoPackage SHALL contain one complete NMIS metadata XML instance document that describes the entire GeoPackage in a gpkg_metadata table row with the contents shown in Table 20 below._*  
+
+Table 20: gpkg_metadata Table Contents - Entire GeoPackage
+[cols=",,",options="header",]
+|=================================================================================================================================
+|Column Name |Column Description |Column Value
+|id |Metadata primary key |1
+|md_scope |Case sensitive name of the data scope to which this metadata applies |‘series’ or ‘dataset’
+|md_standard_uri |URI reference to the metadata structure definition authority |http://metadata.ces.mil/dse/ns/GSIP/nmis/2.2.0/doc
+|mime_type |MIME encoding of metadata |text/xml
+|metadata |metadata |NMIS v2.2 metadata instance document
+|=================================================================================================================================
+
+::
+*_NSG Req 13: The gpkg_metadata table row with the values shown in Table 20 above SHALL be associated with the complete GeoPackage by a gpkg_metadata_reference table row with the contents shown in Table 21 below._*
+
+Table 21: gpkg_metadata_reference Table Contents - Entire GeoPackage
+[cols=",,",options="header",]
+|=====================================================================================================================================================================================
+|Column Name |Column Description |Column Value
+|reference_scope |Lowercase metadata reference scope |‘geopackage’
+|table_name |NULL for reference_scope of ‘geopackage’. |NULL
+|column_name |Name of the column to which this metadata reference applies; NULL for reference_scope of ‘geopackage’ |NULL
+|row_id_value |NULL for reference_scope of ‘geopackage’ |NULL
+|timestamp |timestamp value in ISO 8601format as defined by the strftime function ‘%Y-%m-%dT%H:%M:%fZ’ format string applied to the current time |strftime(‘%Y-%m-%dT%H:%M:%fZ’,’now’)
+|md_file_id |gpkg_metadata table id column value for the metadata to which this gpkg_metadata_reference applies |1
+|md_parent_id |NULL if md_file_id forms the root of a metadata hierarchy |NULL
+|=====================================================================================================================================================================================
+
+::
+*_NSG Req 14: The NMIS v2.2 metadata instance document specified in Table 21 above SHALL contain the XML element and attribute values shown in Table 22._*
+
+Table 22: NMIS v2.2 Metadata Values - Entire GeoPackage
+[cols=",",options="header",]
+|=====================================================================================================================================
+|*/nas:MD_Metadata/ XPath* |*Value(s)*
+|@ism:DESVersion |‘9’
+|@ism:resourceElement |‘true’
+|@ism:createDate |‘2017-05-11’
+|@ism:classification a|
+‘U’, ‘R’,’C’, ‘S’, or ‘TS’  +
+Abbreviated classification for entire GeoPackage. Values derived from DES.ISM.XML  +
+|@ism:ownerProducer |‘USA’
+|@ntk:DESVersion |‘7’
+a|
+/gmd:hierarchyLevel/gmd:MD_ScopeCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ScopeCode’
+a|
+/gmd:hierarchyLevel/gmd:MD_ScopeCode  +
+@codeListValue  +
+ |‘series’ or ‘dataset’
+a|
+/gmd:hierarchyLevelName  +
+/nas:ScopeAmplificationCode  +
+@codeList  +
+
+ |‘http://api.nsgreg.nga.mil/codelist/ScopeAmplificationCode’
+a|
+/gmd:hierarchyLevelName +
+/nas:ScopeAmplificationCode  +
+@codeListValue
+
+ |‘collection’ (for ‘series’) or ‘notApplicable’ (for ‘dataset’)
+a|
+/gmd:contact/gmd:CI_ResponsibleParty/ +
+gmd:organisationName/  +
+gco:CharacterString
+
+ |Free text description of publishing organization for entire GeoPackage.
+a|
+/gmd:contact/gmd:CI_ResponsibleParty/  +
+gmd:role/gmd:CI_RoleCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/RoleCode’
+a|
+/gmd:contact/gmd:CI_ResponsibleParty/  +
+gmd:role/gmd:CI_RoleCode  +
+@codeListValue  +
+ |‘publisher’
+|/gmd:dateStamp/gco:Date |Metadata creation date in YYYY-MM-DD format
+a|
+/gmd:metadataStandardName/  +
+nas:MetadataStandardNameCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/MetadataStandardNameCode’
+a|
+/gmd:metadataStandardName/  +
+nas:MetadataStandardNameCode @codeListValue  +
+ |‘nsgMetadataFoundation’
+a|
+/gmd:metadataStandardVersion/  +
+nas:MetadataStandardVersion  +
+ |‘2.2.0’
+a|
+/gmd:referenceSystemInfo/  +
+gmd:MD_ReferenceSystem/  +
+gmd:referenceSystemIdentifier/  +
+ |repeat for each row in gpkg_spatial_ref_sys for each unique srs_id reference in the gpkg_contents table
+a|
+/gmd:referenceSystemInfo/  +
+gmd:MD_ReferenceSystem/  +
+gmd:referenceSystemIdentifier/  +
+gmd:RS_Identifier/  +
+gmd:code/gco:CharacterString  +
+ |Nonnull gpkg_spatial_ref_sys.srs_name value
+a|
+/gmd:referenceSystemInfo/  +
+gmd:MD_ReferenceSystem/  +
+gmd:referenceSystemIdentifier/  +
+gmd:RS_Identifier/  +
+gmd:codeSpace/gco:CharacterString  +
+ a|
+Nonnull  +
+gpkg_spatial_ref_sys.organization value  +
+a|
+gmd:identificationInfo/  +
+nas:MD_DataIdentification  +
+ |repeated for each row in gpkg_contents
+a|
+gmd:identificationInfo/  +
+nas:MD_DataIdentification/gmd:extent  +
+@gmd:NilReasonType  +
+ a|
+‘inapplicable’  +
+repeated for each row in gpkg_contents with null geographic values.  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:citation/gmd:CI_Citation/  +
+gmd:title/gco:CharacterString  +
+ |gpkg_contents.table_name
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:citation/gmd:CI_Citation/  +
+gmd:date/gmd:CI_Date/  +
+gmd:dateTime/gco:DateTime  +
+ a|
+Date of gpkg creation in  +
+‘YYYY-MM-DDThh:mm:ss’ format  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:citation/  +
+gmd:CI_Citation/gmd:date/  +
+gmd:CI_Date/gmd:dateType/  +
+gmd:CI_DateTypeCode @codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/DateTypeCode’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:citation/  +
+gmd:CI_Citation/gmd:date/  +
+gmd:CI_Date/gmd:dateType/  +
+gmd:CI_DateTypeCode @codeListValue  +
+ |‘creation’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:abstract/  +
+gco:CharacterString  +
+ |Free text description of tile/feature set being described in current gmd:identificationInfo node.
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:pointOfContact/  +
+gmd:CI_ResponsibleParty/  +
+gmd:organisationName/  + 
+gco:CharacterString  +
+ |Publishing organization of tile/feature set being described in current gmd:identificationInfo node.
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:pointOfContact/  +
+gmd:CI_ResponsibleParty/gmd:role/  +
+gmd:CI_RoleCode @codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/RoleCode’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:pointOfContact/  +
+gmd:CI_ResponsibleParty/gmd:role/  +
+gmd:CI_RoleCode @codeListValue  +
+ |‘publisher’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:descriptiveKeywords/  +
+gmd:MD_Keywords/gmd:keyword/  +
+gco:CharacterString  +
+ |“GP10”  
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:resourceConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classification/  +
+gmd:MD_ClassificationCode @codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ClassificationCode’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:resourceConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classification/  +
+gmd:MD_ClassificationCode  +
+@codeListValue  +
+ |Classification of tile/feature set being described in current gmd:identificationInfo node.
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:resourceConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classificationSystem/  +
+nas:ClassificationSystem  +
+ |‘US CAPCO’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:resourceConstraints/  +
+nas:MD_SecurityConstraints/  +
+nas:capcoMarking @ism:classification  +
+ a|
+‘U’, ‘R’,’C’, ‘S’, or ‘TS’  +
+Abbreviated classification of tile/feature set being described in current gmd:identificationInfo node. Values derived from DES.ISM.XML  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:resourceConstraints/  +
+nas:MD_SecurityConstraints/  +
+nas:capcoMarking @ism:ownerProducer  +
+ |‘USA’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:language/gmd:LanguageCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ISO639-2’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+md:language/  +
+gmd:LanguageCode @codeListValue  +
+ |‘eng’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:characterSet/  +
+gmd:MD_CharacterSetCode @codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/CharacterSetCode’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:characterSet/  +
+gmd:MD_CharacterSetCode  +
+@codeListValue  +
+ |‘utf8’
+a|
+gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:extent@gml:NilReasonType  +
+ a|
+‘inapplicable’  +
+repeated for each row in gpkg_contents with null geographic values.  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:extent/  +
+gmd:EX_Extent/  +
+gmd:geographicElement/  +
+gmd:EX_GeographicBoundingBox/  +
+gmd:westBoundLongitude/  +
+gco:Decimal  +
+ a|
+Nonnull gpkg_contents.min_x  +
+value as or converted to EPSG::4326 longitude  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:extent/gmd:EX_Extent/  +
+gmd:geographicElement/  +
+gmd:EX_GeographicBoundingBox/  +
+gmd:eastBoundLongitude/  +
+gco:Decimal  +
+ a|
+Nonnull gpkg_contents.max_x  +
+value as or converted to EPSG::4326 longitude  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:extent/gmd:EX_Extent/  +
+gmd:geographicElement/  +
+gmd:EX_GeographicBoundingBox/  +
+gmd:southBoundLatitude/  +
+gco:Decimal  +
+ a|
+Nonnull gpkg_contents.min_y  +
+value as or converted to EPSG::4326 latitude  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+gmd:extent/gmd:EX_Extent/  +
+gmd:geographicElement/  +
+gmd:EX_GeographicBoundingBox/  +
+gmd:northBoundLatitude/  +
+gco:Decimal  +
+ a|
+Nonnull gpkg_contents.max_y  +
+value as or converted to EPSG::4326 latitude  +
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+nas:languageCountry/  +
+nas:LanguageCountryCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/geo-political/GENC/3/2-1’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+nas:languageCountry/  +
+nas:LanguageCountryCode  +
+@codeListValue  +
+ |‘USA’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+nas:resourceCategory/  +
+nas:ResourceCategoryCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ResourceCategoryCode’
+a|
+/gmd:identificationInfo/  +
+nas:MD_DataIdentification/  +
+nas:resourceCategory/  +
+nas:ResourceCategoryCode  +
+@codeListValue  +
+ |‘other’
+a|
+/gmd:dataQualityInfo/  +
+gmd:DQ_DataQuality/  +
+gmd:scope/gmd:DQ_Scope/  +
+gmd:level/gmd:MD_ScopeCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ScopeCode’
+a|
+/gmd:dataQualityInfo/  +
+gmd:DQ_DataQuality/  + 
+gmd:scope/gmd:DQ_Scope/  +
+gmd:level/gmd:MD_ScopeCode @codeListValue  +
+ |‘series’ or ‘dataset’
+a|
+/gmd:dataQualityInfo/  +
+gmd:DQ_DataQuality/  +
+gmd:scope/gmd:DQ_Scope/  +
+gmd:levelDescription/  +
+gmd:MD_ScopeDescription/gmd:other/  +
+nas:ScopeAmplificationCode @codeList  + 
+ |‘http://api.nsgreg.nga.mil/codelist/ScopeAmplificationCode’
+a|
+/gmd:dataQualityInfo/  +
+gmd:DQ_DataQuality/  +
+gmd:scope/  +
+gmd:DQ_Scope/  +
+gmd:levelDescription/  +
+gmd:MD_ScopeDescription/gmd:other/  +
+nas:ScopeAmplificationCode @codeListValue  +
+ |‘collection’ (for ‘series’) or ‘notApplicable’ (for ‘dataset’)
+a|
+/gmd:dataQualityInfo/  +
+gmd:DQ_DataQuality/  +
+gmd:lineage/gmd:LI_Lineage/  +
+gmd:statment/gco:CharacterString  +
+ |Free text description of lineage for entire GeoPackage
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classification/gmd:MD_ClassificationCode  +
+ |
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classification/  +
+gmd:MD_ClassificationCode  +
+@codeList  +
+ |‘http://api.nsgreg.nga.mil/codelist/ClassificationCode’
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classification/  +
+gmd:MD_ClassificationCode @codeListValue  +
+ |Classification of entire GeoPackage
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+gmd:classificationSystem/  +
+nas:ClassificationSystem  +
+ |‘US CAPCO’
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+nas:capcoMarking @ism:classification  +
+ a|
+‘U’, ‘R’,’C’, ‘S’, or ‘TS’  +
+Abbreviated classification for entire GeoPackage. Values derived from DES.ISM.XML  +
+a|
+/gmd:metadataConstraints/  +
+nas:MD_SecurityConstraints/  +
+nas:capcoMarking @ism:ownerProducer  +
+ |‘USA’
+|=====================================================================================================================================
+
+A GeoPackage MAY contain additional NMIS metadata XML instance documents or fragments that describe particular tables or table row, column, or row/column values in a GeoPackage with the contents shown in Table 23.
+
+Table 23: gpkg_metadata Table Contents - Partial GeoPackage
+[cols=",,",options="header",]
+|=================================================================================================================================
+|Column Name |Column Description |Column Value
+|id |Metadata primary key |2..n
+|md_scope |Case sensitive name of the data scope to which this metadata applies |See Table 25
+|md_standard_uri |URI reference to the metadata structure definition authority |http://metadata.ces.mil/dse/ns/GSIP/nmis/2.2.0/doc
+|mime_type |MIME encoding of metadata |text/xml
+|metadata |metadata |NMIS v2.2 metadata instance document or fragment
+|=================================================================================================================================
+
+::
+*_NSG Req 15: Any gpkg_metadata table row with the values shown in Table 23 SHALL be associated with a GeoPackage user data table, and MAY be associated with a particular row and/or column in that table by a gpkg_metadata_reference table row with the contents shown in Table 24 below. Metadata in gpkg_metadata table row that applies to multiple GeoPackage table, row and/or column content items SHALL be associated with those items by more than one gpkg_metadata_reference table row with the contents shown in Table 24._*  
+
+Table 24: gpkg_metadata_reference Table Contents - Partial GeoPackage
+[cols=",,",options="header",]
+|=====================================================================================================================================================================================================================================
+|Column Name |Column Description |Column Value
+|reference_scope |Lowercase metadata reference scope; one of ‘table’,’column’, ‘row’, ‘row/col’ |See Table 25 below
+|table_name |Name of the table to which this metadata reference applies |As described, NOT NULL
+|column_name |Name of the column to which this metadata reference applies; NULL for reference_scope of ‘table’ or ‘row’, or the name of a column in the table_name table for reference_scope of ‘column’ or ‘row/col’ |As described
+|row_id_value |NULL for reference_scope of ‘table’ or ‘column’, or the rowed of a row record in the table_name table for reference_scope of ‘row’ or ‘row/col’ |As described
+|timestamp |timestamp value in ISO 8601format as defined by the strftime function ‘%Y-%m-%dT%H:%M:%fZ’ format string applied to the current time |strftime(‘%Y-%m-%dT%H:%M:%fZ’,’now’)
+|md_file_id |gpkg_metadata table id column value for the metadata to which this gpkg_metadata_reference applies |2..n
+|md_parent_id |gpkg_metadata table id column value for the hierarchical parent gpkg_metadata for the gpkg_metadata to which this gpkg_metadata_reference applies, or NULL if md_file_id forms the root of a metadata hierarchy |1..n-1
+|=====================================================================================================================================================================================================================================
+
+::
+*_NSG Req 16: The NMIS v2.2 metadata instance document or fragment specified in Table 23 above SHALL contain the gmd:MD_ScopeCode and nas:ScopeAmplificationCode values specified in Table 25, and SHALL contain context-specific values for other items listed in Table 24._*
+
+Table 25: GeoPackage and NMIS metadata scopes
+[cols=",,,",options="header",]
+|===========================================================================================================
+a|
+*gpkg_metadata*
+
+*.md_scope*
+
+ a|
+*gpkg_metadata_reference*
+
+*.reference_scope*
+
+ |*gmd:MD_ScopeCode* |*nas:ScopeAmplificationCode*
+|seriesfootnote:[For a table containing a collection of features or tiles] |table |series |‘collection’
+|datasetfootnote:[For a table containing a collection of features or tiles] |table |dataset |‘notApplicable’
+|featureType |table |featureType |‘theme’ or ‘notApplicable’
+|feature |row |feature |‘cell’
+|attributeType |column |attributeType |‘theme’ or ‘notApplicable’
+|attribute |row/col |attribute |‘cell’
+|tile |row/col |attribute |‘cell’
+|===========================================================================================================
+
+::
+*_NSG Req 17: Data products contained in a GeoPackage SHALL be identified using component elements of:_*  
+* *_/nas:MD_Metadata/gmd:identificationInfo/nas:MD_DataIdentification/gmd:citation_*
+* *_/nas:MD_Metadata/gmd:identificationInfo/nas:MD_DataIdentification/gmd:abstract_*  
+* *_/nas:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage_*  
+
+::
+*_NSG Req 18: If an entire GeoPackage constitutes a data product, then the component elements above that describe it SHALL be in the NMIS metadata that applies to the entire GeoPackage as shown in Table 20. If particular tables in a GeoPackage constitute separate data products, then the component elements that describe those data products SHALL be in the NMIS metadata as shown in Table 23 that applies to those tables._*
+
+An informative metadata reference example is provided in Annex B.
