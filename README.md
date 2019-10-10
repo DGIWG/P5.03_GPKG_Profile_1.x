@@ -6,19 +6,19 @@ STD-DP-19-005		## Xxxxxxx 2020
 
 ![DGIWG Seal](https://github.com/DGIWG/P5.03_GPKG_Profile_1.x/blob/master/media/DGIWG_Logo.png)
 
-Document type:  Standard  
+**Document type:** Standard  
 
-Document subtype:  Implementation Profile  
-Profile of: 	GPKG 1.2.1 (OGC ##-###)  
-Document date: 	## Xxxxxxxx 2020  
-Edition number: 	3.0
-Supersedes: 	Not Applicable  
-Responsible Party: Defence Geospatial Information Working Group (DGIWG)  
-Audience:	This document is approved for public release and is available on the DGIWG website, http://www.dgiwg.org/dgiwg/.  
-Abstract: 	This document defines specific DGIWG requirements, recommendations and guidelines for implementations of the OGC GeoPackage standard 1.2.1  
+**Document subtype:**  Implementation Profile  
+**Profile of:** 	GPKG 1.2.1 (OGC ##-###)  
+**Document date:** 	## Xxxxxxxx 2020  
+**Edition number:** 	3.0
+**Supersedes:** 	Not Applicable  
+**Responsible Party:** Defence Geospatial Information Working Group (DGIWG)  
+**Audience:**	This document is approved for public release and is available on the DGIWG website, http://www.dgiwg.org/dgiwg/.  
+**Abstract:** 	This document defines specific DGIWG requirements, recommendations and guidelines for implementations of the OGC GeoPackage standard 1.2.1  
 
 
-Copyright:  
+**Copyright:**  
 (C) Copyright DGIWG, some rights reserved - (CC) (By:) Attribution   
 You are free:   
 -	to copy, distribute, display, and perform/execute the work  
