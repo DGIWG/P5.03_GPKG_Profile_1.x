@@ -1,11 +1,11 @@
 == 7.3 Metadata
+DGIWG Metadata Foundation, 2.0.0, 2017-7-12
+This clause requires storage of DMF metadata as XML in GeoPackages that contain DGWIG data, and specifies use of particular metadata values in certain conditions per the "DGIWG Metadata Foundation, 2.0.0, 2017-7-12".
 
-This clause requires storage of NMIS v2.2 metadata as XML in GeoPackages that contain NSG data, and specifies use of particular metadata values in certain conditions per the “National System for Geospatial Intelligence Metadata Foundation (NMF) – Part 1: Conceptual Schema Profile, Version 2.2, 23 September 2014”.
-
-The structure and allowed content values of NSG metadata for a GeoPackage are specified by the “National System for Geospatial Intelligence Metadata Implementation Specification (NMIS) - Part 2: XML Exchange Schema, Version 2.2.0, 29 January 2015”.
+The structure and allowed content values of DMF metadata for a GeoPackage are specified by the “DGIWG Metadata Foundation, XML Schema, Version 2.0.0, 2017-07-12”.
 
 ::
-*_NSG Req 12: A GeoPackage SHALL contain one complete NMIS metadata XML instance document that describes the entire GeoPackage in a gpkg_metadata table row with the contents shown in Table 20 below._*  
+*_NSG Req 12: A GeoPackage SHALL contain one complete DMF metadata XML instance document that describes the entire GeoPackage in a gpkg_metadata table row with the contents shown in Table 20 below._*  
 
 Table 20: gpkg_metadata Table Contents - Entire GeoPackage
 [cols=",,",options="header",]
