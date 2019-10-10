@@ -1,0 +1,5 @@
+== *6.2 Extensions*
+
+Every GeoPackage must contain tiles and/or features per OGC GeoPackage Req 17. Extended GeoPackages with SQL tables not defined in the OGC GeoPackage Encoding Standard SHALL register such tables in the gpkg_extensions table.
+
+*_NSG Req 2: The gpkg_extensions SQL table SHALL be defined in accordance with the OGC GeoPackage Encoding Standard Section 3 and the requirements defined therein in any NSG GeoPackage that contains extensions._*
