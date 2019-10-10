@@ -1,0 +1,91 @@
+= Annex E Implementation Guide for EPSG::4326 Tiles
+
+The WGS 84 Geographic 2D (EPSG::4326) GeoPackage tile scheme has an equirectangular layout.
+
+The projection bounds for the WGS 84 Geodetic raster tile pyramid are (-180, -90) to (180, 90).
+
+Zoom level 0 will consist of two square tiles that cover the whole bounds of the projection.
+
+As referenced in the OpenGIS® Web Map Tile Service Implementation Standard, OGC 07-057r7, Section 6.1. a) "The scale denominator is defined with respect to a ‘standardized rendering pixel size’ of 0.28 mm × 0.28 mm (millimeters)". This pixel size is nominal and is used to generate the meters per pixel values shown in Table 34 below.footnote:[Given that, from the server side, the size of the pixels of client display devices cannot be predetermined, WMTS uses a "standard" pixel size of 0.28mm that provides a "common" relationship between pixel size and scale. This can create situations where a server advertises tiles for a given scale that results in visualization at a different scale on a client's display. For example, a server advertised scale of 1:10000 may result in ~1:35000 visualizations on a display with a 0.078mm pixel size (0.28 is only a convenient "constant"). So, to show the "real" scale displayed on this display, the scale advertised by the server must be multiplied by ~3.6 (0.28/0.078).]
+
+At zoom level 0, the pixel size in degrees is 180/256 = 0.7031250.
+
+The zoom level scale set and matrix width and height for the WGS 84 Geodetic raster tile pyramid are defined below in Table 34. These tiles are fully compatible with the World CRS84 TileMatrixSet definition as specified in OGC 13-082r2 “WMTS Simple Profile”. Any discrepancies in the scale denominator and pixels size values shown below are simply an artifact of rounding, and do not reflect any difference in how the tiles are created or rendered.
+
+Table 34: WGS 84 Geodetic zoom level scale set and matrix dimensions
+[cols="5",options="header",]
+|==============================================================================================
+|*Zoom Level* |*Scale Denominator* |*Pixel Size (degrees)* |_*matrix_width*_ |_*matrix_height*_
+|0 |279541132.01435900 |0.7031250 |2 |1
+|1 |139770566.00717900 |0.3515625 |4 |2
+|2 |69885283.00358960 |0.17578125 |8 |4
+|3 |34942641.50179480 |0.0878906250 |16 |8
+|4 |17471320.75089740 |0.0439453125 |32 |16
+|5 |8735660.37544870 |0.0219726563 |64 |32
+|6 |4367830.18772435 |0.0109863281 |128 |64
+|7 |2183915.09386218 |0.0054931641 |256 |128
+|8 |1091957.54693109 |0.0027465820 |512 |256
+|9 |545978.77346554 |0.0013732910 |1024 |512
+|10 |272989.38673277 |0.0006866455 |2048 |1024
+|11 |136494.69336639 |0.0003433228 |4096 |2048
+|12 |68247.34668319 |0.0001716614 |8192 |4096
+|13 |34123.67334160 |0.0000858307 |16384 |8192
+|14 |17061.83667080 |0.0000429153 |32768 |16384
+|15 |8530.91833540 |0.0000214577 |65536 |32768
+|16 |4265.45916770 |0.0000107288 |131072 |65536
+|17 |2132.72958385 |0.0000053644 |262144 |131072
+|18 |1066.36479192 |0.0000026822 |524288 |262144
+|19 |533.18239596 |0.0000013411 |1048576 |524288
+|20 |266.59119798 |0.0000006706 |2097152 |1048576
+|21 |133.29559899 |0.0000003353 |4194304 |2097152
+|22 |66.64779950 |0.0000001676 |8388608 |4194304
+|23 |33.32389975 |0.0000000838 |16777216 |8388608
+|==============================================================================================
+
+All tiles are *globally referenced* based on the zoom level and (column, row) index values on the global WGS 84 Geodetic grid. Figure 6 below shows the (column, row) index values for zoom levels 0 through 2.
+
+.Figure 6: WGS 84 Geodetic tile indexing
+image:/media/image14.png[Slide5_fix,width=619,height=347]
+
+image:/media/image15.png[Slide6_fix,width=619,height=347]
+
+image:/media/image16.png[Slide7_fix,width=619,height=347]
+
+The bounding box in the _*gpkg_tile_matrix_set*_ table should contain the projection bounds for the WGS84 Geodetic raster tile pyramid (-180, -90) to (180, 90) This bounding box is used to determine the geolocation of each tile which use the global tile referencing scheme shown above. All tiles must be ‘snapped’ to the WGS84 Geodetic grid. If source data does not completely fill a tile, pixels without data within the tile must be completely filled with a default value. For JPEG tiles this default value is usually black, while PNG tiles may use transparency. Table 35 below demonstrates how the _matrix_width_ and _matrix_height_ columns values in the _gpkg_tile_matrix_ table should be encoded. These values are fixed and are based on the maximum number of tiles that could exist at a given zoom level.
+
+Table 35: WGS 84 Geodetic gpkg_tile_matrix table
+[cols=",,,,,,,",options="header",]
+|==============================================================================================
+|*_table_name_* |*_zoom_level_* |*_matirx_width_* |*_matrix_height_* |*_tile_width_* |*_tile_height_* | *_pixel_x_size_* | *_pixel_y_size_*
+|sample | 0| 2 | 1 | 256 | 256| 0.703125 | 0.703125
+|sample | 1| 4 | 2 | 256 | 256| 0.3515625 | 0.3515625
+|sample | 2| 8 | 4 | 256 | 256| 0.17578125 | 0.17578125
+|==============================================================================================
+
+The image in Figure 7 and sample ‘tiles’ in Table 36 demonstrate how tiles should be indexed in the WGS 84 Geodetic NSG GeoPackage. The _tile_column_ and _tile_row_ values should indicate the position of each tile on the absolute WGS 84 Geodetic grid for each zoom level. Tiles that do not contain data (e.g. completely black or transparent) should not be included in the tiles table. This tiling scheme is very similar to the Tile Map Service (TMS) specification, with the important difference being that the origin tile (0,0) in a GeoPackage is the top left while the origin tile in TMS is bottom left.
+
+.Figure 7: WGS 84 Geodetic Zoom Level 2 Example
+image:/media/image18.png[Slide8_fix,width=619,height=347]
+
+Table 36: WGS 84 Geodetic tiles table
+[cols=",,,,",options="header",]
+|==============================================================================================
+|*_id_* |*_zoom_level_* |*_tile_column_* |*_tile_row_* |*_tile_data_*
+|1 |0 |1 |0|BLOB
+|2 |1 |2 |2 |BLOB
+|3 |1 |3 |0 |BLOB
+|4 |1 |2 |1 |BLOB
+|5 |1 |3 |1 |BLOB
+|6 |2 |4 |0 |BLOB
+|7 |2 |4 |1 |BLOB
+|8 |2 |4 |2 |BLOB
+|9 |2 |5 |0 |BLOB
+|10 |2 |5 |1 |BLOB
+|11 |2 |5 |2 |BLOB
+|12 |2 |6 |0 |BLOB
+|13 |2 |6 |1 |BLOB
+|14 |2 |6 |2 |BLOB
+|15 |2 |7 |0 |BLOB
+|16 |2 |7 |1 |BLOB
+|17 |2 |7 |2 |BLOB
+||==============================================================================================
