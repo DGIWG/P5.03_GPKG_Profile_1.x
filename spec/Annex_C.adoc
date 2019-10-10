@@ -1,0 +1,156 @@
+= Annex C Implementation Guide for EPSG::3395 Tiles
+
+
+
+The World Mercator (EPSG::3395) GeoPackage tile scheme has a square layout.
+
+
+
+The projection bounds for the World Mercator raster tile pyramid are (-20037508.342789244, -20037508.342789244) to (20037508.342789244, 20037508.342789244) meters which yields the corresponding longitude, latitude limits of (-180, -85.084059) to (180, 85.084059)
+
+
+
+The zoom level 0 tile covers the whole bounds of the projection which yields an area of 40,075,016.68557849 meters by 40,075,016.68557849 meters.
+
+
+
+As referenced in the OpenGIS® Web Map Tile Service Implementation Standard, OGC 07-057r7, Section 6.1. a) "The scale denominator is defined with respect to a ‘standardized rendering pixel size’ of 0.28 mm × 0.28 mm (millimeters)". This pixel size is nominal and is used to generate the meters per pixel values shown in Table 30 below.footnote:[Given that, from the server side, the size of the pixels of client display devices cannot be predetermined, WMTS uses a "standard" pixel size of 0.28mm that provides a "common" relationship between pixel size and scale. This can create situations where a server advertises tiles for a given scale that results in visualization at a different scale on a client's display. For example, a server advertised scale of 1:10000 may result in ~1:35000 visualizations on a display with a 0.078mm pixel size (0.28 is only a convenient "constant"). So, to show the "real" scale displayed on this display, the scale advertised by the server must be multiplied by ~3.6 (0.28/0.078).]
+
+
+
+Two hundred fifty six (256) pixels in the horizontal dimension are defined to be 71.68 mm or 0.07168 meters. It represents 40,075,016.68557849 meters of Earth distance at the equator. Thus, the scale is 40,075,016.68557849 / 0.07168 or 559082264.0287178 at the equator.
+
+
+
+At zoom level 0, the pixel size in meters is 40,075,016.68557849 / 256 = 156543.033928041.
+
+
+
+Scales and pixel sizes for the 3395 projection match the World Web Mercator TileMatrixSet definition as specified in OGC 13-082r2 “WMTS Simple Profile”. Any discrepancies in the scale denominator and pixels size values shown below are simply an artifact of rounding. It is important to note that the Web Mercator (EPSG::3857) and the World Mercator (EPSG::3395) projections are different, thus the actual tile contents will differ slightly.
+
+
+
+The zoom level scale set and matrix width and height for the World Mercator raster tile pyramid are defined below in Table 30.
+
+
+
+Table 30: World Mercator Zoom Level Scale Set and Matrix Dimensions
+
+
+
+[cols=",,,,",options="header",]
+
+|==========================================================================================
+
+|*Zoom Level* |*Scale* |*Pixel Size (m)* |_*matrix_width*_ |_*matrix_height*_
+
+|0 |559082264.02871774553571428572 |156543.03392804096875 |1 |1
+
+|1 |279541132.01435887276785714286 |78271.516964020484375 |2 |2
+
+|2 |139770566.00717943638392857143 |39135.7584820102421875 |4 |4
+
+|3 |69885283.003589718191964285715 |19567.87924100512109375 |8 |8
+
+|4 |34942641.501794859095982142857 |9783.939620502560546875 |16 |16
+
+|5 |17471320.750897429547991071429 |4891.9698102512802734375 |32 |32
+
+|6 |8735660.375448714773995535714 |2445.98490512564013671875 |64 |64
+
+|7 |4367830.1877243573869977678571 |1222.992452562820068359375 |128 |128
+
+|8 |2183915.0938621786934988839286 |611.4962262814100341796875 |256 |256
+
+|9 |1091957.5469310893467494419643 |305.74811314070501708984375 |512 |512
+
+|10 |545978.77346554467337472098214 |152.874056570352508544921875 |1024 |1024
+
+|11 |272989.38673277233668736049107 |76.4370282851762542724609375 |2048 |2048
+
+|12 |136494.69336638616834368024553 |38.21851414258812713623046875 |4096 |4096
+
+|13 |68247.346683193084171840122768 |19.109257071294063568115234375 |8192 |8192
+
+|14 |34123.673341596542085920061386 |9.554628535647031784057617188 |16384 |16384
+
+|15 |17061.836670798271042960030692 |4.7773142678235158920288085938 |32768 |32768
+
+|16 |8530.918335399135521480015346 |2.3886571339117579460144042969 |65536 |65536
+
+|17 |4265.4591676995677607400076729 |1.1943285669558789730072021484 |131072 |131072
+
+|18 |2132.7295838497838803700038364 |0.5971642834779394865036010742 |262144 |262144
+
+|19 |1066.3647919248919401850019182 |0.2985821417389697432518005371 |524288 |524288
+
+|20 |533.18239596244597009250095928 |0.1492910708694848716259002686 |1048576 |1048576
+
+|21 |266.59119798122298504625047964 |0.0746455354347424358129501343 |2097152 |2097152
+
+|22 |133.29559899061149252312523964 |0.0373227677173712179064750671 |4194304 |4194304
+
+|23 |66.647799495305746261562620003 |0.0186613838586856089532375336 |8388608 |8388608
+
+|24 |33.323899747652873130781310002 |0.0093306919293428044766187668 |167772161616 |16777216
+
+|==========================================================================================
+
+All tiles are *globally referenced* based on the zoom level and (column, row) index values on the global World Mercator grid. Figure 4 below shows the (column, row) index values for zoom levels 0 through 3.
+
+
+
+Figure 4: World Mercator tile indexing
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image3.png[Figure 4 Zoom Levels 1 and 2,width=623,height=289]
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image4.png[Figure 4 Zoom Level 2,width=651,height=366]
+
+
+
+The bounding box in the _*gpkg_tile_matrix_set*_ table should contain the projection bounds for the World Mercator raster tile pyramid (-20037508.342789244, -20037508.342789244) to (20037508.342789244, 20037508.342789244) This bounding box is used to determine the geolocation of each tile which use the global tile referencing scheme shown above. All tiles must be ‘snapped’ to the World Mercator grid. If source data does not completely fill a tile, pixels without data within the tile must be completely filled with a default value. For JPEG tiles this default value is usually black, while PNG tiles may use transparency. Table 31 below demonstrates how the how the bounding box values in the World Mercator _*gpkg_tile_matrix_set*_ table (_min_x, min_y, max_x, max_y_) should be encoded.
+
+Table 31: World Mercator gpkg_tile_matrix_set
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image5.png[image,width=532,height=39]
+
+
+
+The next table demonstrates how the _matrix_width_ and _matrix_height_ columns values in the _gpkg_tile_matrix_ table should be encoded. These values are fixed and are based on the maximum number of tiles that could exist at a given zoom level.
+
+
+
+Table 32: World Mercator gpkg_tile_matrix
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image6.png[image,width=604,height=56]
+
+
+
+Table 33 demonstrates how tiles from the image in Figure 5 should be indexed in the World Mercator NSG GeoPackage. The _tile_colunm_ and _tile_row_ values should indicate the position of each tile on the absolute World Mercator grid for each zoom level. Tiles that do not contain data (e.g. completely black or transparent) should not be included in the tiles table. This tiling scheme is very similar to the Tile Map Service (TMS) specification, with the important difference being that the origin tile (0,0) in a GeoPackage is the top left while the origin tile in TMS is bottom left.
+
+
+
+Figure 5: World Mercator zoom level 1 example
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image7.png[image,width=372,height=383]
+
+
+
+Table 33: World Mercator ‘tiles’ table
+
+
+
+image:https://github.com/royrathbun/nsg_geopkg/blob/master/media/image8.png[image,width=427,height=121]
+
+
+
