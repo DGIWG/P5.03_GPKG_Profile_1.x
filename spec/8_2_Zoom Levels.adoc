@@ -1,0 +1,7 @@
+== 8.2 Zoom Levels
+
+This clause specifies that pixel sizes vary by a factor of 2 between all adjacent zoom levels, adopting the commonly used "zoom times two" convention, and precluding the use of "zoom other intervals" conventions. It applies to any tile pyramid user data tables defined in accordance with Clause 2.2.8 that contain NSG data.
+
+::
+*_NSG Req 22: The gpkg_tile_matrix table SHALL contain pixel_x_size and pixel_y_size column values that differ by a factor of 2 between all adjacent zoom levels for each tile pyramid data table per OGC GeoPackage Clause 2.2.3. It SHALL NOT contain pixel sizes that vary by irregular intervals or by regular intervals other than a factor of 2 between adjacent zoom levels per OGC GeoPackage Clause 2.2.3._*
+
