@@ -13,9 +13,9 @@ Table 20: gpkg_metadata Table Contents - Entire GeoPackage
 |Column Name |Column Description |Column Value
 |id |Metadata primary key |1
 |md_scope |Case sensitive name of the data scope to which this metadata applies |‘series’ or ‘dataset’
-|md_standard_uri |URI reference to the metadata structure definition authority |http://metadata.ces.mil/dse/ns/GSIP/nmis/2.2.0/doc
+|md_standard_uri |URI reference to the metadata structure definition authority |https://portal.dgiwg.org/files/?artifact_id=67565&format=doc
 |mime_type |MIME encoding of metadata |text/xml
-|metadata |metadata |NMIS v2.2 metadata instance document
+|metadata |metadata |DMF metadata instance document
 |=================================================================================================================================
 
 ::
@@ -35,12 +35,12 @@ Table 21: gpkg_metadata_reference Table Contents - Entire GeoPackage
 |=====================================================================================================================================================================================
 
 ::
-*_NSG Req 14: The NMIS v2.2 metadata instance document specified in Table 21 above SHALL contain the XML element and attribute values shown in Table 22._*
+*_NSG Req 14: The DMF v2.0.0 metadata instance document specified in Table 21 above SHALL contain the XML element and attribute values shown in Table 22._*
 
-Table 22: NMIS v2.2 Metadata Values - Entire GeoPackage
+Table 22: DMF v2.0.0 Metadata Values - Entire GeoPackage
 [cols=",",options="header",]
 |=====================================================================================================================================
-|*/nas:MD_Metadata/ XPath* |*Value(s)*
+|*/dmf:MD_Metadata/ XPath* |*Value(s)*
 |@ism:DESVersion |‘9’
 |@ism:resourceElement |‘true’
 |@ism:createDate |‘2017-05-11’
