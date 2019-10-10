@@ -1,0 +1,16 @@
+== 9.1  GeoPackage Extensions
+
+This provides guidance on GeoPackage extensions for features.
+
+It applies to any GeoPackage that contains NSG data in any vector feature user data table defined in accordance with OGC GeoPackage Clause 2.1.6.
+
+
+::
+*_NSG Req 25: The GeoPackage Geometry Types Extension specified in OGC GeoPackage Annex F.1 SHALL NOT be implemented and registered._* 
+::
+*_NSG Req 26: The User-Defined Geometry Types Extension specified in clause OGC GeoPackage Annex F.2 SHALL NOT be implemented and registered._*
+
+Extended geometry types MAY be allowed in a future version of this standard as required to meet identified NSG mission needs.  
+
+::
+*_NSG Req 27: The GeoPackage Rtree Spatial Indexes Extension specified in OGC GeoPackage Annex F.3 MAY be implemented and registered._*
