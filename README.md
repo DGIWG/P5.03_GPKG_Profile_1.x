@@ -2,7 +2,7 @@
 
 DGIWG ### 
 
-STD-DP-20-###		## Xxxxxxx 2020
+STD-DP-19-005		## Xxxxxxx 2020
 
 ![DGIWG Seal](https://github.com/DGIWG/P5.03_GPKG_Profile_1.x/blob/master/media/DGIWG_Logo.png)
 
