@@ -1,0 +1,9 @@
+== 8.1 Tile Size
+
+This clause mandates 256x256 tiles in any tile pyramid user data tables defined in accordance with OGC GeoPackage Clause 2.2.8 that contain NSG data.
+
+::
+*_NSG Req 20: The gpkg_tile_matrix table SHALL contain tile_width and tile_height column values of 256 for every table_name tile pyramid data table._*
+
+::
+*_NSG Req 21: Every tile_data tile in every table_name tile pyramid data table shall have a width and height of 256 pixels._*
