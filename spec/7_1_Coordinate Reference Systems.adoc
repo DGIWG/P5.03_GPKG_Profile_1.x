@@ -1,0 +1,149 @@
+== 7.1  Coordinate Reference Systems
+
+This clause specifies allowable Coordinate Reference Systems (CRS) and their Well Known Text (WKT) definitions that SHALL be included in the NSG GeoPackages. These CRS SHALL be used in the gpkg_spatial_ref_sys table and referenced by the gpkg_contents, gpkg_tile_matrix_set and gpkg_geometry_columns tables srs_id column values. In this document, CRS is the preferred and more accurate terminology. Spatial Reference Systems (SRS) is not used in this document except in pre-existing field names. The CRSs that are allowed for NSG GeoPackages are listed in Table 4,Table 5,and Table 6.
+
+**Note: Web Mercator**footnote:[Definition of Well-known scale Set for Web Mercator is found in OpenGIS® Web Map Tile Service Implementation Standard, OGC 07-057r7, Date 2010-04-06, Annex E, Table E.4-Definition of Well-known scale set GoogleMapsCompatible.] *is a de facto standard used for web mapping applications. It is used by virtually all major online map providers, including Google Maps, Bing Maps, OpenStreetMap, Mapquest, Esri, Mapbox, and others. If using WMTS map data from a Volunteered Geographic Information (VGI) or commodity data source which is in the Web Mercator projection, it is highly recommended that your service warn users that this data is suitable for Visualization use cases only.*
+
+For a use case that requires Precise Locations and precise navigation (land, air, and sea) the World Mercator projection is mandated.
+
+Table 4 lists the CRSs that are recommended for raster tile pyramid NSG GeoPackages viewed in 2-Dimensional (2D) Map software applications, and Table 5 lists the CRSs that are recommended for raster tile pyramid NSG GeoPackages viewed in 3-Dimensional (3D) Globe software applications. Table 6 lists the CRSs that SHALL be used for vector feature NSG GeoPackages, including both 2D and 3D vector features.
+
+CRS parameter values SHALL be those stated in Table 7 through Table 19 below. Parameter values for CRS defined by EPSG are those specified by the EPSG Geodetic Parameter Registry when this document was published.
+
+Applications that can read standard GeoPackages can read the specified CRS definitions in the gpkg_spatial_ref_sys table.
+
+::
+*_NSG Req 3: The CRSs listed in Table 4, Table 5, and Table 6 SHALL be the only CRSs used by raster tile pyramid and vector feature data tables in a GeoPackage._*
+
+Note: The integer codes assigned to NGA CRSs in this document meet two conditions to avoid confusion with CRS codes used for data imported from external sources and converted to a CRS defined by NGA. First, they are unique among all srs_id values referenced by the base GeoPackage specification and those defined in this document. Second, they do not duplicate the codes for any CRSs registered in http://www.epsg-registry.org, although some of them do duplicate codes for coordinate operations and other items in that registry, where codes are only unique within a type. It is recommended that these conditions continue to be met if these codes are changed by the appropriate NGA authority.
+
+{empty}[[_Ref408828132]]
+
+Table 4: Raster Tile Pyramid Coordinate Reference Systems recommended for use in 2D Map Applications
+
+[cols=",,,,",options="header",]
+|======================================================
+|*CRS Name* a|
+*CRS*
+
+*AUTH*
+
+*ID*
+
+ a|
+*CRS*
+
+*Type*
+
+ a|
+*CRS*
+
+*Dim*
+
+ a|
+*CRS*
+
+*Def*
+
+|WGS 84 / World Mercator |EPSG 3395 |PROJ |2 |Table 9
+|WGS 84 / UPS North (E,N) |EPSG 5041 |PROJ |2 |Table 10
+|WGS 84 / UPS South (E,N) |EPSG 5042 |PROJ |2 |Table 11
+|======================================================
+
+::
+*_NSG Req 4: World Mercator (EPSG::3395) and UPS North/South (EPSG::5041/5042) raster tile pyramid GeoPackages SHALL follow the technical guidance provided in Annex C: Implementation Guide for EPSG::3395 Tiles or Annex D: Implementation Guide for UPS Tiles._*
+
+[[_Ref455140050]]Table 5: Raster Tile Pyramid Coordinate Reference Systems recommended for use in 3D Globe Applications
+
+[cols=",,,,",options="header",]
+|======================================================
+|*CRS Name* a|
+*CRS*
+
+*AUTH*
+
+*ID*
+
+ a|
+*CRS*
+
+*Type*
+
+ a|
+*CRS*
+
+*Dim*
+
+ a|
+*CRS*
+
+*Def*
+
+|WGS 84 Geographic 2D |EPSG 4326 |GEOD |2 |Table 8
+|WGS 84 / World Mercator |EPSG 3395 |PROJ |2 |Table 9
+|WGS 84 / UPS North (E,N) |EPSG 5041 |PROJ |2 |Table 10
+|WGS 84 / UPS South (E,N) |EPSG 5042 |PROJ |2 |Table 11
+|======================================================
+
+::
+*_NSG Req 5: WGS 84 Geographic 2D (EPSG::4326) raster tile pyramid GeoPackages SHALL follow the technical guidance in Annex E: Implementation Guide for 4326 Tiles_*
+
+[[_Ref455140055]]Table 6: Vector feature Coordinate Reference Systems
+
+[cols=",,,,",options="header",]
+|===============================================================
+|*CRS Name* a|
+*CRS*
+
+*AUTH*
+
+*ID*
+
+ a|
+*CRS*
+
+*Type*
+
+ a|
+*CRS*
+
+*Dim*
+
+ a|
+*CRS*
+
+*Def*
+
+|WGS 84 Geographic 2D |EPSG 4326 |GEOD |2 |Table 8
+|WGS 84 Geographic 3D |EPSG 4979 |GEOD |3 |Table 7
+|WGS84 Geographic 2D Height (EGM08) |NGA 8101 |COMP |3 |Table 18
+|WGS84 Geographic 2D Depth (EGM08) |NGA 8102 |COMP |3 |Table 18
+|WGS84 Geographic 2D Height (EGM96) |NGA 8103 |COMP |3 |Table 18
+|WGS84 Geographic 2D Depth (EGM96) |NGA 8104 |COMP |3 |Table 18
+|WGS84 Geographic 2D Height (MSL) |NGA 8105 |COMP |3 |Table 18
+|WGS84 Geographic 2D Depth (MSL) |NGA 8106 |COMP |3 |Table 18
+|EGM2008 geoid height |EPSG 3855 |VERT |1 |Table 12
+|EGM2008 geoid depth |NGA 8056 |VERT |1 |Table 13
+|EGM96 geoid height |EPSG 5773 |VERT |1 |Table 14
+|EGM96 geoid depth |NGA 8074 |VERT |1 |Table 15
+|MSL height |EPSG 5714 |VERT |1 |Table 16
+|MSL depth |EPSG 5715 |VERT |1 |Table 17
+|===============================================================
+
+::
+*_NSG Req 6: The WGS 84 Geographic 2D CRS SHALL be used for 2D vector features._*
+
+::
+*_NSG Req 7: 3D vector features SHALL use the WGS 84 Geographic 3D CRS OR one of the composite 3D CRSs specified in Table 6._*
+
+Composite CRSs can be produced by following the template in Table 18 and parameter values in Table 19 to create CRS WKT definitions encoded per OpenGIS® 01-009.
+
+::
+*_NSG Req 8: The CRS definitions in Table 7 through Table 19 below SHALL be used to specify the CRS used for tiles and vector feature user data tables containing NSG data in a GeoPackage._*
+
+The srs_name column values do not contain the name in the definition column value in cases where the name is ambiguous or conflicts with other CRS naming conventions, i.e. the Military Grid Reference System (MGRS), as footnoted belowfootnote:[There is no requirement in 12-128r11 that the srs_name match the name in the definition column, so this profile will attempt to resolve ambiguities and conflicts with MGRS conventions.].
+
+::
+*_NSG Req 9: Other CRS definitions SHALL NOT be specified for GeoPackage SQL tables containing NSG data._*
+
+Note: Annex A provides a crosswalk between the Coordinate Reference Systems (CRS) defined in this clause and the corresponding identifiers in the http://metadata.ces.mil/dse/ns/GSIP/crs[DoD/IC Coordinate Reference Systems Dictionary] in the DoD Data Services Environment (DSE) Metadata Registry (MDR), where such exist. It proposes DSE MDR identifiers for the CRSs defined in this clause that are not registered in the DSE MDR.
