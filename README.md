@@ -11,7 +11,7 @@ STD-DP-19-005		## Xxxxxxx 2020
 **Document subtype:**  Implementation Profile  
 **Profile of:** 	GPKG 1.2.1 (OGC ##-###)  
 **Document date:** 	## Xxxxxxxx 2020  
-**Edition number:** 	3.0
+**Edition number:** 	3.0  
 **Supersedes:** 	Not Applicable  
 **Responsible Party:** Defence Geospatial Information Working Group (DGIWG)  
 **Audience:**	This document is approved for public release and is available on the DGIWG website, http://www.dgiwg.org/dgiwg/.  
