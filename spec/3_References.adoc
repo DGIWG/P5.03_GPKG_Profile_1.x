@@ -1,15 +1,15 @@
 = References
 
-Normative (prescriptive) references in the NSG GeoPackage Interoperability Standard are identified in Table 2.
+Normative (prescriptive) references in the DGIWG GeoPackage Interoperability Standard are identified in Table 2.
 
-[[_Ref455132110]]Table 2: Normative References in NSG GeoPackage Interoperability Standard
+[[_Ref455132110]]Table 2: Normative References in DGIWG GeoPackage Interoperability Standard
 
 [cols=",",options="header",]
 |=====================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
 |*Standard or Specification* |*Description of Standard*
 |DoD/IC Coordinate Reference Systems Dictionary |A collection of coordinate reference system dictionaries for use in the DoD/IC.
-|EPSG Geodetic Parameter Registry Version: 8.6.1 in the DoD Data Services Environment (DSE) Metadata Registry (MDR) |The EPSG Geodetic Parameter Dataset is a structured dataset of Coordinate Reference Systems and Coordinate Transformations, accessible through this online registry (www.epsg-registry.org) or, as a downloadable zip files, through OGP’s EPSG home page at www.epsg.org. The geographic coverage of the data is worldwide, but it is stressed that the dataset does not and cannot record all possible geodetic parameters in use around the world. The EPSG Geodetic Parameter Dataset is maintained by the Geodesy Subcommittee of OGP’s Geomatics Committee.
-|Information technology – Database languages – SQL Multimedia and application packages – Part 3: Spatial |The purpose of ISO/IEC 13249 is to define multimedia and application specific types and their associated routines using the user-defined features in ISO/IEC 9075.
+|EPSG Geodetic Parameter Registry Version: 9.8.3 |The EPSG Geodetic Parameter Dataset is a structured dataset of Coordinate Reference Systems and Coordinate Transformations, accessible through this online registry (www.epsg-registry.org) or, as a downloadable zip files, through the International Association of Oil & Gas Producer's (OGP) EPSG home page at www.epsg.org. The geographic coverage of the data is worldwide, but it is stressed that the dataset does not and cannot record all possible geodetic parameters in use around the world. The EPSG Geodetic Parameter Dataset is maintained by the Geodesy Subcommittee of OGP’s Geomatics Committee.
+|ISO/IEC 13249-3:2011, Information technology – Database languages – SQL Multimedia and Application Packages – Part 3: Spatial(SQL/MM) |The purpose of ISO/IEC 13249 is to define multimedia and application specific types and their associated routines using the user-defined features in ISO/IEC 9075.
 |ISO 19125-:2004, Geographic Information, Simple feature access, Part 2: SQL option |ISO 19125-2:2004 specifies an SQL schema that supports storage, retrieval, query and update of simple geospatial feature collections via the SQL Call Level Interface (SQL/CLI) and establishes an architecture for the implementation of feature tables.
 |ISO 19125-1:2004, Geographic Information, Simple feature access, Part 1: Common Architecture |ISO 19125-1:2004 establishes a common architecture for geographic information and defines terms to use within the architecture. It also standardizes names and geometric definitions for Types for Geometry.
 |ISO/IEC 13249-3 |This part of ISO/IEC 13249:
