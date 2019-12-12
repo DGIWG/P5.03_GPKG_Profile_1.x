@@ -17,13 +17,13 @@ This document requires adherence to all GeoPackage OGC Specification normative c
 
 [cols=",",options="header",]
 |================================================================================================
-|*NSG GeoPackage Profile Clause* |*GeoPackage Encoding Standard Clause*
+|*DGIWG GeoPackage Profile Clause* |*GeoPackage Encoding Standard Clause*
 |6.1 File Names |1.1.1.1.2 File Extension Name
 |6.2 Extensions |2.3.2 Extensions
 |7.1 Coordinate Reference Systems |1.1.2.1.2 Spatial Reference Systems / Data / Table Data Values
 |7.3 Metadata |Annex F.8
 |7.3 Metadata |Annex F.8
-|7.3Metadata |3 Security Considerations
+|7.3 Metadata |3 Security Considerations
 |7.4 Data Validity Constraints |1.1.2.1 Spatial Reference Systems / Data
 |7.4 Data Validity Constraints |1.1.3.1 Contents / Data
 |7.4 Data Validity Constraints |2.1.5.1 Geometry Columns / Data
@@ -48,6 +48,6 @@ This document requires adherence to all GeoPackage OGC Specification normative c
 
 When used in this document, the term “shall” indicates a firm, mandatory requirement; whereas, the terms “may”, “will”, and “should” identify non-mandatory requirements.
 
-Not all clauses of this Interoperability Standard apply to all NSG GeoPackages or GeoPackage SQLite Extensions because a particular GeoPackage may contain vector features, tile pyramids, or both.
+Not all clauses of this Interoperability Standard apply to all DGIWG GeoPackages or GeoPackage SQLite Extensions because a particular GeoPackage may contain vector features, tile pyramids, or both.
 
-Any comments or questions regarding the interpretation of the provisions of the NSG GeoPackage Profile are to be addressed via the appropriate governance process for NSG interoperability standards.
+Any comments or questions regarding the interpretation of the provisions of the DGIWG GeoPackage Profile are to be addressed via the appropriate governance process for DGIWG interoperability standards.
