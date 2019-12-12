@@ -1,6 +1,6 @@
 = 2. Scope
 
-This interoperability standard defines DGIWG implementable provisions that profile the OGC GeoPackage standard to ensure that NSG GeoPackages, GeoPackage SQLite Extensions, and supporting utilities and services fulfil their intended purposes and are fit for use.
+This interoperability standard defines DGIWG implementable provisions that profile the OGC GeoPackage standard to ensure that DGIWG GeoPackages, GeoPackage SQLite Extensions, and supporting utilities and services fulfil their intended purposes and are fit for use.
 
 This interoperability standard will be used by government, commercial, open source, and Non-Governmental Organizations (NGOs):
 
