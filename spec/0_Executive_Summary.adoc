@@ -1,0 +1,4 @@
+= Executive Summary  
+
+This document defines specific Defence requirements for a GeoPackage, and provides 
+recommendations and guidelines for implementations of the Open Geospatial Consortium GeoPackage 1.2.
